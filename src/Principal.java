@@ -1,4 +1,5 @@
 import java.io.Console;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Principal {
@@ -45,18 +46,26 @@ public class Principal {
                 case 6:{
                     base = "COP";
                     target = "ARS";
-                }break;
-                default:
+                }
+                break;
+
+                case 7:
+                    System.out.println("Gracias por convertir monedas.");
+                    System.exit(1);
                     break;
             }
             System.out.println("Ingrese el monto a convertir: ");
             monto = t.nextFloat();
             try {
                 Moneda moneda = conversion.buscarmoneda(base, target, monto);
-                System.out.println("El monto de $" + monto + " en " + base + ".\nMoneda a convertir " + target + moneda.toString() + "\n\n");
+                System.out.println(moneda.imprimir() + "\n\n");
+                Generador generador = new Generador();
+                generador.generararchivo(moneda);
 
             } catch (RuntimeException e) {
                 System.out.println("Opción no valida");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         System.out.println("El programa ha terminado.");
